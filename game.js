@@ -65,8 +65,7 @@ function checkAnswer(currentLevel) {
 };
 
 function gameOver() {
-  let wrong = new Audio('sounds/wrong.mp3')
-  wrong.play();
+  playSound('wrong');
   $('h1').text('Game Over! Refresh or Press Enter to Restart')
   $('body').addClass('game-over')
   setTimeout(function() {
