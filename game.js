@@ -11,9 +11,15 @@ $(document).keydown(function(event) {
 
 $('.btn').click(function() {
   if (level === 0) {
-    setTimeout(function(){
+    setTimeout(function() {
       nextSequence();
-    }, 500)
+    }, 500);
+  } else if (level > 0) {
+    userChosenColour = this.id;
+    userClickedPattern.push(userChosenColour);
+    playSound(userChosenColour);
+    animatePress(userChosenColour);
+    checkAnswer(userClickedPattern.length - 1);
   }
 });
 
@@ -28,16 +34,6 @@ function nextSequence() {
   level++;
   $('h1').text('Level ' + level);
 };
-
-$('.btn').click(function() {
-  if (level > 0) {
-    userChosenColour = this.id;
-    userClickedPattern.push(userChosenColour);
-    playSound(userChosenColour);
-    animatePress(userChosenColour);
-    checkAnswer(userClickedPattern.length - 1);
-  }
-});
 
 function playSound(name) {
   let audio = new Audio('sounds/' + name + '.mp3');
@@ -71,7 +67,7 @@ function checkAnswer(currentLevel) {
 function gameOver() {
   let wrong = new Audio('sounds/wrong.mp3')
   wrong.play();
-  $('h1').text('Game Over, Refresh or Press Enter to Restart')
+  $('h1').text('Game Over! Refresh or Press Enter to Restart')
   $('body').addClass('game-over')
   setTimeout(function() {
     $('body').removeClass('game-over')
