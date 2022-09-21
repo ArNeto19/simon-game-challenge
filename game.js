@@ -1,6 +1,8 @@
+//jshint esversion:6
+
 const buttonColours = ['red', 'blue', 'green', 'yellow'];
-const gamePattern = [];
-const userClickedPattern = [];
+let gamePattern = [];
+let userClickedPattern = [];
 let level = 0;
 
 $(document).keydown(function(event) {
@@ -28,27 +30,33 @@ function nextSequence() {
   let randomNumber = Math.floor(Math.random() * 4);
   let randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
-  $('#' + randomChosenColour).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
-  let audio = new Audio('sounds/' + randomChosenColour + '.mp3');
-  audio.play();
+
+  gamePattern.forEach((color, index) => {
+    setTimeout(() => {
+      $(`#${color}`).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+      playSound(color);
+    }, index * 600);
+
+  });
+
   level++;
   $('h1').text('Level ' + level);
-};
+}
 
 function playSound(name) {
   let audio = new Audio('sounds/' + name + '.mp3');
   audio.play();
-};
+}
 
 function animatePress(currentColour) {
   let activeButton = $('#' + currentColour);
 
-  $(activeButton).addClass('pressed')
+  $(activeButton).addClass('pressed');
 
   setTimeout(function() {
-    $(activeButton).removeClass('pressed')
+    $(activeButton).removeClass('pressed');
   }, 100);
-};
+}
 
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
@@ -62,17 +70,17 @@ function checkAnswer(currentLevel) {
     console.log('wrong');
     gameOver();
   }
-};
+}
 
 function gameOver() {
   playSound('wrong');
-  $('h1').text('Game Over! Refresh or Press Enter to Restart')
-  $('body').addClass('game-over')
+  $('h1').text('Game Over! Refresh or Press Enter to Restart');
+  $('body').addClass('game-over');
   setTimeout(function() {
-    $('body').removeClass('game-over')
+    $('body').removeClass('game-over');
   }, 200);
   startOver();
-};
+}
 
 function startOver() {
   $(document).keydown(function(event) {
@@ -81,5 +89,5 @@ function startOver() {
         (window.location.reload());
       }, 200);
     }
-  })
-};
+  });
+}
