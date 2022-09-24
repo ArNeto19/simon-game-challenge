@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Simon</title>
+  <title>Simon Game by: ArNeto19</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
@@ -26,13 +26,25 @@
     </div>
 
   </div>
-  </form>
 
   <div class="leaderboard">
-    <h1> High Scores </h1>
-    <ol>
-      
-    </ol>
+    <div class="">
+      <h1> High Scores </h1>
+    </div>
+    <div class="">
+      <ol>
+        <% allPlayers.sort( (x, y) => { %>
+        <%  return y.level - x.level %>
+        <% }) %>
+        <% if (allPlayers.length >= 5) {for (let i=0; i<5; i++) { %>
+        <li>
+          <mark> <%= allPlayers[i].name %> </mark>
+          <small> <%= allPlayers[i].level %> </small>
+        </li>
+        <% }} %>
+      </ol>
+    </div>
+
   </div>
 
 
