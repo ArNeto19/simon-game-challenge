@@ -4,6 +4,32 @@ const buttonColours = ['red', 'blue', 'green', 'yellow'];
 let gamePattern = [];
 let userClickedPattern = [];
 let level = 0;
+let playerName = '';
+
+$.get('http://localhost:3000/api/v1/players-scores', (data) => {
+
+  data.sort((x, y) => {
+    return y.level - x.level;
+  });
+
+  if (data.length < 5) {
+    data.forEach((player) => {
+      $('#ranking').append(`<li>
+        <mark> ${player.name} </mark>
+        <small> ${player.level} </small>
+        </li>`);
+    });
+  } else {
+    for (let i = 0; i < data.length; i++) {
+      $('#ranking').append(`<li>
+        <mark> ${data[i].name} </mark>
+        <small> ${data[i].level} </small>
+        </li>`);
+    }
+  }
+
+});
+
 
 $(document).keydown(function(event) {
   if (level === 0 && event.key === 'Enter') {
@@ -40,11 +66,11 @@ function nextSequence() {
   });
 
   level++;
-  $('h1').text('Level ' + level);
+  $('#level-title').text('Level ' + level);
 }
 
 function playSound(name) {
-  let audio = new Audio('sounds/' + name + '.mp3');
+  let audio = new Audio('./sounds/' + name + '.mp3');
   audio.play();
 }
 
@@ -74,7 +100,7 @@ function checkAnswer(currentLevel) {
 
 function gameOver() {
   playSound('wrong');
-  $('h1').text('Game Over! Refresh or Press Enter to Restart');
+  $('#level-title').text('Game Over! Press Enter to Save Your Progress');
   $('body').addClass('game-over');
   setTimeout(function() {
     $('body').removeClass('game-over');
@@ -84,10 +110,22 @@ function gameOver() {
 
 function startOver() {
   $(document).keydown(function(event) {
+
     if (event.key === 'Enter') {
-      setTimeout(function() {
-        (window.location.reload());
-      }, 200);
+      playerName = prompt('Player Name');
+
+      if (playerName === null || playerName === '') {
+        alert('Your score could not be saved! Please enter a valid name.');
+      } else {
+        $.post('http://localhost:3000/api/v1/players-scores', {
+          level,
+          playerName
+        });
+        window.location.reload();
+      }
+
     }
+
   });
+
 }
