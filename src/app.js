@@ -4,15 +4,15 @@ require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(express.static("public"));
 
-app.set('view engine', 'ejs');
 mongoose.connect(`mongodb+srv://admin-${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.wx5ya.mongodb.net/simonGameDB`, {
   useNewUrlParser: true
 });
@@ -25,20 +25,17 @@ const Player = mongoose.model('player', playerSchema);
 
 //- Routes
 
-app.route('/')
+app.route('/api/v1/players-scores')
+
   .get((req, res) => {
 
     Player.find({}, (err, foundItems) => {
       if (err) {
         console.log(err);
       } else {
-        res.render('index', {
-          allPlayers: foundItems
-        });
+        res.send(foundItems);
       }
-
     });
-
   })
 
   .post((req, res) => {
@@ -52,7 +49,6 @@ app.route('/')
     });
     player.save();
 
-    res.redirect('/');
   });
 
 

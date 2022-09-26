@@ -6,6 +6,31 @@ let userClickedPattern = [];
 let level = 0;
 let playerName = '';
 
+$.get('http://localhost:3000/api/v1/players-scores', (data) => {
+
+  data.sort((x, y) => {
+    return y.level - x.level;
+  });
+
+  if (data.length < 5) {
+    data.forEach((player) => {
+      $('#ranking').append(`<li>
+        <mark> ${player.name} </mark>
+        <small> ${player.level} </small>
+        </li>`);
+    });
+  } else {
+    for (let i = 0; i < data.length; i++) {
+      $('#ranking').append(`<li>
+        <mark> ${data[i].name} </mark>
+        <small> ${data[i].level} </small>
+        </li>`);
+    }
+  }
+
+});
+
+
 $(document).keydown(function(event) {
   if (level === 0 && event.key === 'Enter') {
     nextSequence();
@@ -92,7 +117,7 @@ function startOver() {
       if (playerName === null || playerName === '') {
         alert('Your score could not be saved! Please enter a valid name.');
       } else {
-        $.post('/', {
+        $.post('http://localhost:3000/api/v1/players-scores', {
           level,
           playerName
         });

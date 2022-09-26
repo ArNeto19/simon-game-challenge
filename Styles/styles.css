@@ -64,7 +64,7 @@ p {
   display: block;
   background: linear-gradient(to bottom, #3a404d, #181c26);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin: 8rem auto auto;
+  margin: 6rem auto auto;
 }
 
 .leaderboard h1 {
