@@ -61,12 +61,12 @@ function nextSequence() {
     setTimeout(() => {
       $(`#${color}`).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
       playSound(color);
-    }, index * 600);
+    }, index * 500);
 
   });
 
   level++;
-  $('#level-title').text('Level ' + level);
+  $('#level-title').html(`<h1>Level ${level}</h1>`);
 }
 
 function playSound(name) {
@@ -100,7 +100,8 @@ function checkAnswer(currentLevel) {
 
 function gameOver() {
   playSound('wrong');
-  $('#level-title').text('Game Over! Press Enter to Save Your Progress');
+  $('#level-title').html('');
+  $('#level-title').html('<h1>Game Over!</h1> <p>CLICK HERE or press Enter to save score</p>');
   $('body').addClass('game-over');
   setTimeout(function() {
     $('body').removeClass('game-over');
@@ -109,6 +110,21 @@ function gameOver() {
 }
 
 function startOver() {
+
+  $('#level-title').click(() => {
+    playerName = prompt('Player Name');
+
+    if (playerName === null || playerName === '') {
+      alert('Your score could not be saved! Please enter a valid name.');
+    } else {
+      $.post('https://evening-temple-42830.herokuapp.com/api/v1/players-scores', {
+        level,
+        playerName
+      });
+      window.location.reload();
+    }
+  });
+
   $(document).keydown(function(event) {
 
     if (event.key === 'Enter') {

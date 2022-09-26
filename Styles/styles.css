@@ -10,9 +10,16 @@ p {
   color: #FEF2BF;
 }
 
-#level-title {
+#level-title h1 {
   font-family: 'Press Start 2P', cursive;
   font-size: 3rem;
+  margin: 3%;
+  color: #FEF2BF;
+}
+
+#level-title p {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
   margin: 3%;
   color: #FEF2BF;
 }
@@ -64,7 +71,7 @@ p {
   display: block;
   background: linear-gradient(to bottom, #3a404d, #181c26);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin: 6rem auto auto;
+  margin: 2.5rem auto auto;
 }
 
 .leaderboard h1 {
@@ -109,4 +116,16 @@ p {
   counter-increment: number;
   margin: auto;
   display: flex;
+}
+
+
+@media (max-width: 991px) {
+  .btn {
+    margin: 20px;
+    display: inline-block;
+    height: 150px;
+    width: 150px;
+    border: 10px solid black;
+    border-radius: 20%;
+  }
 }
