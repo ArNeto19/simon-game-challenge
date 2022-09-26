@@ -6,7 +6,7 @@ let userClickedPattern = [];
 let level = 0;
 let playerName = '';
 
-$.get('http://evening-temple-42830.herokuapp.com/api/v1/players-scores', (data) => {
+$.get('https://evening-temple-42830.herokuapp.com/api/v1/players-scores', (data) => {
 
   data.sort((x, y) => {
     return y.level - x.level;
@@ -117,7 +117,7 @@ function startOver() {
       if (playerName === null || playerName === '') {
         alert('Your score could not be saved! Please enter a valid name.');
       } else {
-        $.post('http://evening-temple-42830.herokuapp.com/api/v1/players-scores', {
+        $.post('https://evening-temple-42830.herokuapp.com/api/v1/players-scores', {
           level,
           playerName
         });
