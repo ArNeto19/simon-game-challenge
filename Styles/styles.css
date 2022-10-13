@@ -1,6 +1,7 @@
 body {
   text-align: center;
   background-color: #011F3F;
+  cursor: context-menu;
 }
 
 p {
@@ -22,6 +23,7 @@ p {
   font-size: 2rem;
   margin: 3%;
   color: #FEF2BF;
+  cursor: pointer;
 }
 
 .container {
@@ -37,6 +39,7 @@ p {
   width: 200px;
   border: 10px solid black;
   border-radius: 20%;
+  cursor: pointer;
 }
 
 .game-over {
