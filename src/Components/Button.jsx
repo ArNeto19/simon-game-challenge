@@ -1,30 +1,28 @@
-//jshint esversion:8
-import React, {useState} from "react";
+import { useState } from "react";
 
 function Button(props) {
+  const [isPressed, setIsPressed] = useState(false);
 
-  function pressButton(event) {
-    props.onClick(event.target.id);
+  function pressButton(e) {
+    console.log(e.target.id);
   }
 
-  const [isPressed, setIsPressed] = useState(false);
   function animatePress() {
     setIsPressed(true);
 
     setTimeout(() => setIsPressed(false), 100);
   }
 
-
   return (
-    <div
+    <button
       type="button"
       id={props.id}
-      className={ `${props.className} ${isPressed ? 'pressed' : ''}` }
-      onClick={() => { pressButton(event); animatePress()}}>
-    </div>
-  )
+      className={`${props.className} ${isPressed ? "pressed" : ""}`}
+      onClick={(e) => {
+        pressButton(e);
+        animatePress();
+      }}></button>
+  );
 }
-
-
 
 export default Button;
